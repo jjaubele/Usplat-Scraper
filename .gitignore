@@ -1,0 +1,8 @@
+EjemplosCampeonatos/
+EjemplosResultados/
+EjemplosTorneos/
+chromedriver-win64/
+BD/
+BD_Backup/
+*.env
+*.json
