@@ -1,0 +1,195 @@
+id_evento,nombre,metrica,nombre_wa
+1,60 Metros Planos,Segundos,60m
+2,Lanzamiento Jabalina,Metros,
+3,Salto con Garrocha,Metros,PV
+4,Salto Largo,Metros,LJ
+5,Lanzamiento Bala,Metros,SP
+6,Salto Alto,Metros,HJ
+7,80 Metros Planos,Segundos,80m
+8,300 Metros Planos,Segundos,300m
+9,400 Metros Planos,Segundos,400m
+10,Posta 8x50 Metros,Segundos,
+11,110 Metros Vallas,Segundos,110mH
+12,100 Metros Planos,Segundos,100m
+13,800 Metros Planos,Segundos,800m
+14,Posta 4x100 Metros,Segundos,4x100m
+15,60 Metros Vallas,Segundos,60mH
+16,80 Metros Vallas,Segundos,80mH
+17,1.000 Metros Planos,Segundos,1000m
+18,Lanzamiento Disco,Metros,DT
+19,1.500 Metros Planos,Segundos,1500m
+20,Posta 5x80 Metros,Segundos,
+21,100 Metros Vallas,Segundos,100mH
+22,600 Metros Planos,Segundos,600m
+23,Lanzamiento Pelotita,Metros,
+24,3.000 Metros Planos,Segundos,3000m
+25,Salto Triple,Metros,TJ
+26,Lanzamiento Martillo,Metros,HT
+27,10.000 Metros Planos,Segundos,10000m
+28,5.000 Metros Planos,Segundos,5000m
+29,10.000 Metros Marcha,Segundos,"10,000mW"
+30,200 Metros Planos,Segundos,200m
+31,400 Metros Vallas,Segundos,400mH
+32,3.000 Metros Obstáculos,Segundos,3000m SC
+33,Posta 4x400 Metros,Segundos,4x400m
+34,50 Metros Planos,Segundos,50m
+35,5.000 Metros Marcha,Segundos,5000mW
+36,2.000 Metros Obstáculos,Segundos,2000m SC
+37,"Posta 4x200 Metros Mixta,Posta 4x400 Metros Mixta",Segundos,
+38,Posta Combinada,Segundos,
+39,Posta 5x300 Metros,Segundos,
+40,Posta 4x200 Metros,Segundos,4x200m
+41,Posta UC,Segundos,
+42,Decatlón,Puntos,Dec.
+43,Hexatlón,Puntos,
+44,Heptatlón,Puntos,Hept.
+45,3.000 Metros Marcha,Segundos,3000mW
+46,1.500 Metros Obstáculos,Segundos,1500m SC
+47,300 Metros Vallas,Segundos,300mH
+48,Posta New Balance,Segundos,
+49,Cross Country 2k,Segundos,
+50,Cross Country 4k,Segundos,
+51,Cross Country 6k,Segundos,
+52,Cross Country 10k,Segundos,
+53,Cross Country 8k,Segundos,
+54,Posta 4x300 Metros,Segundos,
+55,1.200 Metros Planos,Segundos,1200m
+56,Posta Sueca 4x100 Metros,Segundos,
+57,Posta Padre Hurtado,Segundos,
+58,Posta CODEFEN,Segundos,
+59,500 Metros Planos,Segundos,500m
+60,20.000 Metros Marcha,Segundos,"20,000mW"
+61,40 Metros Planos,Segundos,40m
+62,2.000 Metros Planos,Segundos,2000m
+63,Posta 6x50 Metros,Segundos,
+64,Relevo Nahuen,Segundos,
+65,Lanzamiento Martelete,Metros,
+66,200 Metros Vallas,Segundos,200mH
+67,Posta 4x80 Metros,Segundos,
+68,Posta Inglesa,Segundos,
+69,150 Metros Planos,Segundos,150m
+70,Octatlón,Puntos,
+71,Pentatlón,Puntos,
+72,Posta Olimpica,Segundos,
+73,Posta de la Amistad,Segundos,
+74,Lanzamiento Vortex,Metros,
+75,Posta Sueca,Segundos,
+76,Posta Sueca Mixta,Segundos,
+77,Posta Chuqui,Segundos,
+78,Posta 8x50 Metros Mixta,Segundos,
+79,Circuito de Estaciones,Puntos,
+80,1 Milla,Segundos,Mile
+81,Posta 5x80 Metros Mixta,Segundos,
+82,Posta 4x100 Metros Mixta,Segundos,
+83,20 Kilómetros Marcha,Segundos,20km W
+84,10 Kilómetros Marcha,Segundos,10km W
+85,5 Kilómetros Marcha,Segundos,5km W
+86,3 Kilómetros Marcha,Segundos,3km W
+87,21 Kilómetros,Segundos,HM
+88,1 Kilómetro Marcha,Segundos,
+89,120 Metros Planos,Segundos,120m
+90,Posta 4x50 Metros,Segundos,
+91,Relevo 4x2 Kms. Mixto,Segundos,
+92,Cross Country 1k,Segundos,
+93,Cross Country 800M,Segundos,
+94,Cross Country 600M,Segundos,
+95,Cross Country 500M,Segundos,
+96,Tetratlón 1,Puntos,
+97,Tetratlón 2,Puntos,
+98,10 Kilómetros,Segundos,10 km
+99,Posta 6x50 Metros Mixta,Segundos,
+100,Posta Olímpica Mixta,Segundos,
+101,Posta Phoenix,Segundos,
+102,"200 Metros Vallas,300 Metros Vallas,400 Metros Vallas",Segundos,
+103,2.000 Metros Marcha,Segundos,2000mW
+104,200 Metros Marcha,Segundos,200mW
+105,Triatlón 1,Puntos,
+106,Triatlón 2,Puntos,
+107,35 Kilómetros Marcha,Segundos,35km W
+108,500 Metros,Segundos,
+109,1 Kilómetro,Segundos,
+110,3 Kilómetros,Segundos,3 km
+111,5 Kilómetros,Segundos,5 km
+112,Posta 4x200 Metros Mixta,Segundos,
+113,8.000 Metros Planos,Segundos,8000m
+114,Cross Country 7.7 k,Segundos,
+115,Cross Country 9.3 k,Segundos,
+116,Cross Country 6.9k,Segundos,
+117,Cross Country 6.9 k,Segundos,
+118,Cross Country 4.6 k,Segundos,
+119,Cross Country 1.1k,Segundos,
+120,Cross Country 2.3 k,Segundos,
+121,"42,195 Kilómetros",Segundos,Marathon
+122,Posta CAS,Segundos,
+123,1.000 Metros Marcha,Segundos,1000mW
+124,"Posta 4x100 Metros,Posta 4x100 Metros Mixta",Segundos,
+125,Duatlón,Puntos,
+126,Triatlón,Puntos,
+127,Tetratlón 3,Puntos,
+128,Posta 4x50 Metros Mixta,Segundos,
+129,Cross Country 0.5k,Segundos,
+130,Relevo 4x1 Kms. Mixto,Segundos,
+131,Posta 4x40 Metros,Segundos,
+132,350 Metros Planos,Segundos,350m
+133,Tetratlón (Velocidad),Puntos,
+134,Tetratlón (Saltos),Puntos,
+135,Tetratlón (Lanzamientos),Puntos,
+136,Tetratlón (Técnico),Puntos,
+137,Posta 4x400 Metros Mixta,Segundos,4x400mix
+138,Posta Colegio Inglés,Segundos,
+139,400 Metros Marcha,Segundos,400mW
+140,Estafeta 30 mts Mixto,Segundos,
+141,Estafeta 40 mts Mixto,Segundos,
+142,Posta Karen Gallardo,Segundos,
+143,Posta Futuro,Segundos,
+144,Cross Country 3.75k,Segundos,
+145,Cross Country 2.5k,Segundos,
+146,Posta CAF,Segundos,
+147,1.500 Metros Marcha,Segundos,1500mW
+148,Cross Country 1.25k,Segundos,
+149,Cross Country 0.65k,Segundos,
+150,2 Kilómetro,Segundos,
+151,60 Metros Obstáculos,Segundos,60m SC
+152,6.000 Metros Planos,Segundos,6000m
+153,2 Vueltas,Segundos,
+154,Posta 4x259 Metros Mixta,Segundos,
+155,3 Vueltas,Segundos,
+156,Posta Maisonnette,Segundos,
+157,Cross Country 3.2k,Segundos,
+158,Cross Country 2.4k,Segundos,
+159,Cross Country 1.8k,Segundos,
+160,Cross Country 0.75k,Segundos,
+161,Relevo Lycée Claude Gay,Segundos,
+162,Relevo CAV,Segundos,
+163,Posta Santa Úrsula,Segundos,
+164,4 Estaciones,Puntos,
+165,40 Metros Vallas,Segundos,40mH
+166,50 Metros Vallas,Segundos,50mH
+167,Triatlón (NCT),Puntos,
+168,"Posta 5x80 Metros,Posta 5x80 Metros Mixta",Segundos,
+169,"3.000 Metros Marcha,3.000 Metros Obstáculos",Segundos,
+170,Posta Combinada Mixta,Segundos,
+171,2.500 Metros Planos,Segundos,2500m
+172,1.250 Metros Planos,Segundos,1250m
+173,625 Metros Planos,Segundos,625m
+174,1.050 Metros Planos,Segundos,1050m
+175,700 Metros Planos,Segundos,700m
+176,Cross Country 5k,Segundos,
+177,Cross Country 3k,Segundos,
+178,Tetratlón,Puntos,
+179,Triatlón Velocidad,Puntos,
+180,Triatlón Saltos,Puntos,
+181,Triatlón Lanzamientos,Puntos,
+182,Posta Colegio La Cruz,Segundos,
+183,Tritlón Lanzamientos,Puntos,
+184,Tritlón Saltos,Puntos,
+185,Tritlón Velocidad,Puntos,
+186,600 Metros Marcha,Segundos,600mW
+187,Posta 4x800 Metros Mixta,Segundos,
+188,Posta 5x300 Metros Mixta,Segundos,
+189,Posta 6x60 Metros,Segundos,
+190,"21,098 Kilómetros Marcha",Segundos,HMW
+191,14 Kilómetros,Segundos,14 km
+192,7 Kilómetros,Segundos,7 km
+193,450 Metros Planos,Segundos,450m
+194,Posta Medley,Segundos,
