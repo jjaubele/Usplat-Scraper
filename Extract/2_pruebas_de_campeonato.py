@@ -118,11 +118,14 @@ async def main(urls):
 
 if __name__ == "__main__":
 
-    FIRST_ID = 1
-    LAST_ID = 1694
+    pruebas = pd.read_csv(Path(__file__).parent / "../BD/Tablas/pruebas.csv")
     campeonatos = pd.read_csv(Path(__file__).parent / "../BD/Tablas/campeonatos.csv")
-    ids_scrapeados = set(campeonatos["id_campeonato"].astype(str))
-    ids_por_scrapear = [id for id in range(FIRST_ID, LAST_ID + 1) if str(id) not in ids_scrapeados]
+    pruebas_campeonatos = pruebas.merge(campeonatos, left_on='id_campeonato', right_on='id_campeonato', how='left')
+    LAST_ID_SCRAPED = campeonatos['id_campeonato'].max()
+    LAST_ID_TO_SCRAP = 1697
+    ids_por_scrapear = [id for id in range(LAST_ID_SCRAPED + 1, LAST_ID_TO_SCRAP + 1) if id not in campeonatos['id_campeonato'].values]
     BASE_URL = "https://atletismo.usplat.cl/torneo/campeonato-nacional/resultados/"
-    URLS = [(id, f"{BASE_URL}{id}/") for id in ids_por_scrapear]
+    URLS = [(int(id), f"{BASE_URL}{id}/") for id in ids_por_scrapear]
+    print(f"Total de campeonatos a scrapear: {len(URLS)}")
+    print(f"IDs de campeonatos a scrapear: {ids_por_scrapear}")
     asyncio.run(main(URLS))

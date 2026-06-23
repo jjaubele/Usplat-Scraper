@@ -239,15 +239,20 @@ async def main(urls):
 
 if __name__ == "__main__":
 
-    FIRST_ID = 51526
-    LAST_ID = 51958
     pruebas = pd.read_csv(Path(__file__).parent / "../BD/Tablas/pruebas.csv")
-    # timestamp < fecha y hora de la prueba + 1 día no se considera definitivamente scrapeado, ya que los resultados pueden actualizarse.
-    pruebas_scrapeadas = pruebas[pd.to_datetime(pruebas['timestamp']) > (pd.to_datetime(pruebas['fecha']) + pd.Timedelta(days=1))]
-    ids_scrapeados = set(pruebas_scrapeadas['id_prueba'].unique())
-    ids_por_scrapear = [id for id in range(FIRST_ID, LAST_ID + 1) if id not in ids_scrapeados]
-    # ids_por_scrapear = list(range(FIRST_ID, LAST_ID + 1))
+    LAST_ID_SCRAPED = pruebas['id_prueba'].max()
+    LAST_ID_TO_SCRAP = 52118
+    ids_por_scrapear = [id for id in range(LAST_ID_SCRAPED + 1, LAST_ID_TO_SCRAP + 1) if id not in pruebas['id_prueba'].values]
+    # timestamp < fecha y hora de la prueba + 2 días no se considera definitivamente scrapeado, ya que los resultados pueden actualizarse.
+    pruebas_no_scrapeadas_definitivamente = pruebas[pd.to_datetime(pruebas['timestamp']) <= (pd.to_datetime(pruebas['fecha']) + pd.Timedelta(days=2))]
+    pruebas_a_mas_de_una_semana = pruebas[pd.to_datetime(pruebas['fecha']) > (pd.Timestamp.now() + pd.Timedelta(days=7))]
+    # No volver a scrapear pruebas muy lejanas en el tiempo hasta 1 semana antes de la fecha de la prueba.
+    ids_por_scrapear = [id for id in ids_por_scrapear if id not in pruebas_a_mas_de_una_semana['id_prueba'].values]
+    for id in pruebas_no_scrapeadas_definitivamente['id_prueba'].values:
+        if id not in pruebas_a_mas_de_una_semana['id_prueba'].values and id not in ids_por_scrapear:
+            ids_por_scrapear.append(id)
     BASE_URL = "https://atletismo.usplat.cl/torneo/campeonato-nacional/resultados/1503/prueba/"
-    URLS = [(id, f"{BASE_URL}{id}/") for id in ids_por_scrapear]
+    URLS = [(int(id), f"{BASE_URL}{id}/") for id in ids_por_scrapear]
     print(f"Total de pruebas a scrapear: {len(URLS)}")
+    print(f"IDs de pruebas a scrapear: {[id for id, url in URLS]}")
     asyncio.run(main(URLS))# Solo para mantener el navegador abierto durante pruebas
