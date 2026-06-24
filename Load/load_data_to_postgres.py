@@ -30,7 +30,6 @@ def load_env_variables():
 DB_CONFIG = load_env_variables()
 
 def create_connection():
-    """Crear conexión a PostgreSQL"""
     try:
         conn = psycopg2.connect(**DB_CONFIG)
         print("✓ Conexión exitosa a PostgreSQL")
@@ -40,7 +39,6 @@ def create_connection():
         return None
 
 def execute_sql_file(conn, sql_file_path):
-    """Ejecutar el archivo SQL para crear las tablas"""
     try:
         with open(sql_file_path, 'r', encoding='utf-8') as f:
             sql_script = f.read()
@@ -56,105 +54,147 @@ def execute_sql_file(conn, sql_file_path):
         conn.rollback()
         return False
 
-def load_paises(conn, csv_path):
-    """Cargar datos de países"""
-    try:
-        # Leer CSV
-        df = pd.read_csv(csv_path)
-        print(f"✓ Leídos {len(df)} países desde {csv_path}")
-        
-        # Insertar datos
-        cursor = conn.cursor()
-        for _, row in df.iterrows():
-            cursor.execute(
-                'INSERT INTO "Paises" (id_pais, nombre) VALUES (%s, %s) ON CONFLICT (id_pais) DO NOTHING',
-                (int(row['id_pais']), row['Pais'])
-            )
-        
-        conn.commit()
-        cursor.close()
-        print(f"✓ {len(df)} países cargados en la tabla Paises")
-        return True
-    except Exception as e:
-        print(f"✗ Error al cargar países: {e}")
-        conn.rollback()
-        return False
-
 def load_athletes(conn, csv_path):
-    """Cargar datos de atletas"""
     try:
-        # Leer CSV
         df = pd.read_csv(csv_path)
-        print(f"✓ Leídos {len(df)} atletas desde {csv_path}")
-        
-        # Obtener mapeo de países
         cursor = conn.cursor()
-        cursor.execute('SELECT nombre, id_pais FROM "Paises"')
-        paises_map = {nombre: id_pais for nombre, id_pais in cursor.fetchall()}
-        
-        # Insertar atletas
-        inserted = 0
-        skipped = 0
-        errors = 0
-        
-        for _, row in df.iterrows():
-            try:
-                # Obtener ID de país
-                pais_nombre = row['Pais']
-                id_pais = paises_map.get(pais_nombre)
-                
-                if id_pais is None:
-                    print(f"  Advertencia: País no encontrado: {pais_nombre}")
-                    skipped += 1
-                    continue
-                
-                # Parsear fecha de nacimiento
-                fecha_nac = None
-                if pd.notna(row['Fecha de Nacimiento']):
-                    try:
-                        fecha_nac = pd.to_datetime(row['Fecha de Nacimiento']).date()
-                    except:
-                        pass
-                
-                # Insertar atleta (sin campo sexo ya que no está en el CSV)
-                cursor.execute(
-                    '''INSERT INTO "Atletas" (id_atleta, nombre, apellido, sexo, id_pais, fecha_de_nacimiento) 
-                       VALUES (%s, %s, %s, %s, %s, %s) 
-                       ON CONFLICT (id_atleta) DO NOTHING''',
-                    (int(row['id_atleta']), 
-                     row['Nombre'] if pd.notna(row['Nombre']) else None,
-                     row['Apellido'] if pd.notna(row['Apellido']) else None,
-                     None,  # sexo no disponible en CSV
-                     id_pais,
-                     fecha_nac)
-                )
-                inserted += 1
-                
-                if inserted % 1000 == 0:
-                    conn.commit()
-                    print(f"  Progreso: {inserted} atletas insertados...")
-                    
-            except Exception as e:
-                print(f"  Error en atleta {row.get('id_atleta', 'unknown')}: {e}")
-                errors += 1
-                continue
-        
+        for index, row in df.iterrows():
+            insert_query = sql.SQL("""
+                INSERT INTO public."Atletas" (id_atleta, nombre, apellido, fecha_nacimiento, pais, colegio, club, club_master)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (id_atleta) DO NOTHING
+            """)
+            cursor.execute(insert_query, (
+                row['id_atleta'],
+                row['Nombre'],
+                row['Apellido'],
+                row['Fecha de Nacimiento'] if pd.notnull(row['Fecha de Nacimiento']) else None,
+                row['Pais'],
+                row['Colegio'],
+                row['Club'],
+                row['Club Master']
+            ))
         conn.commit()
         cursor.close()
-        
-        print(f"✓ Carga completada:")
-        print(f"  - {inserted} atletas insertados")
-        print(f"  - {skipped} omitidos (país no encontrado)")
-        print(f"  - {errors} errores")
-        
-        return True
+        print(f"✓ Atletas cargados desde {csv_path}")
+
     except Exception as e:
         print(f"✗ Error al cargar atletas: {e}")
         conn.rollback()
         return False
+    
+def load_championships(conn, csv_path):
+    try:
+        df = pd.read_csv(csv_path)
+        cursor = conn.cursor()
+        for index, row in df.iterrows():
+            insert_query = sql.SQL("""
+                INSERT INTO public."Campeonatos" (id_campeonato, nombre_campeonato, nombre_torneo)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (id_campeonato) DO NOTHING
+            """)
+            cursor.execute(insert_query, (
+                row['id_campeonato'],
+                row['nombre_campeonato'],
+                row['nombre_torneo']
+            ))
+        conn.commit()
+        cursor.close()
+        print(f"✓ Campeonatos cargados desde {csv_path}")
+
+    except Exception as e:
+        print(f"✗ Error al cargar campeonatos: {e}")
+        conn.rollback()
+        return False
+    
+def load_events(conn, csv_path):
+    try:
+        df = pd.read_csv(csv_path)
+        cursor = conn.cursor()
+        for index, row in df.iterrows():
+            insert_query = sql.SQL("""
+                INSERT INTO public."Eventos" (id_evento, nombre, metrica, nombre_wa)
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (id_evento) DO NOTHING
+            """)
+            cursor.execute(insert_query, (
+                row['id_evento'],
+                row['nombre'],
+                row['metrica'],
+                row['nombre_wa']
+            ))
+        conn.commit()
+        cursor.close()
+        print(f"✓ Eventos cargados desde {csv_path}")
+
+    except Exception as e:
+        print(f"✗ Error al cargar eventos: {e}")
+        conn.rollback()
+        return False
+    
+def load_pruebas(conn, csv_path):
+    try:
+        df = pd.read_csv(csv_path)
+        cursor = conn.cursor()
+        for index, row in df.iterrows():
+            insert_query = sql.SQL("""
+                INSERT INTO public."Pruebas" (id_prueba, fecha, hora, genero, categorias, prueba_padre, id_campeonato, id_evento, timestamp)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (id_prueba) DO NOTHING
+            """)
+            cursor.execute(insert_query, (
+                row['id_prueba'],
+                row['fecha'] if pd.notnull(row['fecha']) else None,
+                row['hora'],
+                row['genero'],
+                row['categorias'],
+                int(row['prueba_padre']) if pd.notnull(row['prueba_padre']) else None,
+                int(row['id_campeonato']) if pd.notnull(row['id_campeonato']) else None,
+                int(row['id_evento']) if pd.notnull(row['id_evento']) else None,
+                row['timestamp'] if pd.notnull(row['timestamp']) else None
+            ))
+        conn.commit()
+        cursor.close()
+        print(f"✓ Pruebas cargadas desde {csv_path}")
+
+    except Exception as e:
+        print(f"✗ Error al cargar pruebas: {e}")
+        conn.rollback()
+        return False
+    
+def load_resultados(conn, csv_path):
+    try:
+        df = pd.read_csv(csv_path)
+        cursor = conn.cursor()
+        # Datos no tienen id_resultado
+        for index, row in df.iterrows():
+            insert_query = sql.SQL("""
+                INSERT INTO public."Resultados" (id_prueba, id_atleta, posicion, atleta, club, pista, resultado, serie, viento, resultado_formateado, puntos)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """)
+            cursor.execute(insert_query, (
+                int(row['id_prueba']) if pd.notnull(row['id_prueba']) else None,
+                int(row['id_atleta']) if pd.notnull(row['id_atleta']) else None,
+                row['posicion'],
+                row['atleta'],
+                row['club'],
+                row['pista'],
+                row['resultado'],
+                row['serie'],
+                row['viento'],
+                float(row['resultado_formateado']) if pd.notnull(row['resultado_formateado']) else None,
+                int(row['puntos']) if pd.notnull(row['puntos']) else None
+            ))
+        conn.commit()
+        cursor.close()
+        print(f"✓ Resultados cargados desde {csv_path}")
+
+    except Exception as e:
+        print(f"✗ Error al cargar resultados: {e}")
+        conn.rollback()
+        return False
 
 def main():
-    """Función principal"""
     print("=" * 60)
     print("CARGA DE DATOS A POSTGRESQL - USPLAT")
     print("=" * 60)
@@ -165,22 +205,37 @@ def main():
     
     try:
         # 1. Crear esquema de base de datos
-        print("\n[1/3] Creando esquema de base de datos...")
-        sql_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\UsplatDB.sql"
+        print("\n[1/6] Creando esquema de base de datos...")
+        sql_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\Load\UsplatDB.sql"
         if execute_sql_file(conn, sql_path):
             print("✓ Esquema creado exitosamente")
         else:
             print("⚠ Advertencia: Puede que el esquema ya exista")
         
-        # 2. Cargar países
-        print("\n[2/3] Cargando países...")
-        paises_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\paises.csv"
-        load_paises(conn, paises_path)
-        
-        # 3. Cargar atletas
-        print("\n[3/3] Cargando atletas...")
-        athletes_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\athletes_cleaned.csv"
+        # 2. Cargar atletas
+        print("\n[2/6] Cargando atletas...")
+        athletes_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\Tablas\atletas.csv"
         load_athletes(conn, athletes_path)
+
+        # 3. Cargar campeonatos
+        print("\n[3/6] Cargando campeonatos...")
+        championships_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\Tablas\campeonatos.csv"
+        load_championships(conn, championships_path)
+
+        # 4. Cargar eventos
+        print("\n[4/6] Cargando eventos...")
+        events_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\Tablas\eventos.csv"
+        load_events(conn, events_path)
+
+        # 5. Cargar pruebas
+        print("\n[5/6] Cargando pruebas...")
+        pruebas_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\Tablas\pruebas.csv"
+        load_pruebas(conn, pruebas_path)
+
+        # 6. Cargar resultados
+        print("\n[6/6] Cargando resultados...")
+        resultados_path = r"c:\Users\juanj\OneDrive - Universidad Católica de Chile\Escritorio\Usplat Scraper\BD\Tablas\resultados.csv"
+        load_resultados(conn, resultados_path)
         
         print("\n" + "=" * 60)
         print("✓ PROCESO COMPLETADO EXITOSAMENTE")

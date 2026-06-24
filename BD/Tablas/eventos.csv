@@ -1,6 +1,6 @@
 id_evento,nombre,metrica,nombre_wa
 1,60 Metros Planos,Segundos,60m
-2,Lanzamiento Jabalina,Metros,
+2,Lanzamiento Jabalina,Metros,JT
 3,Salto con Garrocha,Metros,PV
 4,Salto Largo,Metros,LJ
 5,Lanzamiento Bala,Metros,SP
